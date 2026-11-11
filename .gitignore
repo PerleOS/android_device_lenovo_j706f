@@ -1,0 +1,5 @@
+# SPDX-FileCopyrightText: The PerleOS Project
+# SPDX-License-Identifier: Apache-2.0
+
+# Stock kernel, DTBs and DTBO extracted locally (see README.md); never committed.
+/prebuilt/
