@@ -1,0 +1,6 @@
+[
+  {
+    "repository": "android_device_lenovo_pearl-common",
+    "target_path": "device/lenovo/pearl-common"
+  }
+]
