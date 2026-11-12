@@ -7,6 +7,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 $(call inherit-product, device/lenovo/j706f/device.mk)
 $(call inherit-product, vendor/lineage/config/common_full_tablet_wifionly.mk)
+$(call inherit-product, vendor/perleos/config/common.mk)
 
 PRODUCT_DEVICE := j706f
 PRODUCT_NAME := lineage_j706f
