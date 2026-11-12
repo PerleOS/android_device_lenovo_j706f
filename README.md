@@ -13,7 +13,7 @@ PerleOS device tree for the Lenovo Tab P11 Pro TB-J706F (Wi-Fi, ROW), based on L
 | Stock firmware base | `TB-J706F_S620150_211226_ROW` |
 | Common tree | [`android_device_lenovo_pearl-common`](https://github.com/PerleOS/android_device_lenovo_pearl-common) |
 
-Build: `lunch lineage_j706f-ap2a-userdebug`, then `m systemimage systemextimage productimage check-all-partition-sizes`. Use `lunch`, not `breakfast`: roomservice only looks for repositories in the LineageOS organization.
+Build: `lunch lineage_j706f-ap2a-user` (or `-userdebug` for debugging), then `m bootimage systemimage systemextimage productimage check-all-partition-sizes`. Use `lunch`, not `breakfast`: roomservice only looks for repositories in the LineageOS organization.
 
 See the common tree's README for the current phase and the rules for contributors.
 
@@ -23,14 +23,8 @@ Apache-2.0, see `LICENSE`.
 
 ## Kernel
 
-No kernel is distributed in this tree. The stock kernel, DTBs and DTBO are GPL-2.0 binaries whose source has not been published, so PerleOS will only distribute a kernel built from source (later phase). Phase 1 builds `system`, `system_ext` and `product` only and keeps the stock `boot` and `dtbo` partitions, so it needs no kernel; `BoardConfig.mk` then sets `TARGET_NO_KERNEL`.
+The kernel is built from source: [`android_kernel_lenovo_sm6150`](https://github.com/PerleOS/android_kernel_lenovo_sm6150) at `kernel/lenovo/sm6150` (listed in `local_manifests`), with `vendor/pearl_row_wifi-perf_defconfig`, the savedefconfig of the stock S620150 kernel. It is built like the stock kernel (clang, GNU binutils 2.27) and keeps the stock module ABI, so the 38 kernel modules of the stock `vendor` load unchanged (`vermagic 4.14.190-perf+`, same symbol CRCs). `boot.img` holds the kernel, the `sdmmagpie` and `sdmmagpiep` base DTBs (equal to the stock ones) and the LineageOS ramdisk with the stock first-stage fstab as `fstab.default`. The stock `dtbo` partition is kept; no DTBO is built.
 
-To build a boot image, extract the files from the stock `TB-J706F_S620150_211226_ROW` package into `prebuilt/` (ignored by git):
+`boot.img` keeps the stock OS version and patch level (11.0.0, 2021-12): Keymaster only moves the patch level forward, so a later date would make a return to the stock boot image lose the keys bound to it.
 
-| File | From |
-|---|---|
-| `prebuilt/Image.gz` | `kernel` output of `unpack_bootimg --boot_img boot.img` (gzip, 15,182,558 bytes, sha256 `b0a9496a6b561d8ea436f2aba3696c743e4fd9b4a5f063911e4d7766ffe52813`) |
-| `prebuilt/dtbs/00.dtb` | `dtb` output of the same command (the 16 concatenated FDT blobs, 3,268,415 bytes, sha256 `b6dc9a809cdaf70424516de05a4daa2cd5dc362fa285bf0f3281faa78a40c8ef`) |
-| `prebuilt/dtbo.img` | `dtbo.img` of the package, unchanged (sha256 `e17c01b90428851f7e088c889b052327b228a12f94a6d036f39f54baef25354c`) |
-
-Never use files from another model or another firmware release: the 38 kernel modules of the stock `vendor` are built against this kernel (`vermagic 4.14.190-perf+`).
+Never use files from another model or another firmware release.
