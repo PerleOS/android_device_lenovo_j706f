@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
--include device/lenovo/pearl-common/BoardConfigCommon.mk
+include device/lenovo/pearl-common/BoardConfigCommon.mk
 
 DEVICE_PATH := device/lenovo/j706f
 
