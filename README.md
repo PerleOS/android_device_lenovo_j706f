@@ -27,4 +27,6 @@ The kernel is built from source: [`android_kernel_lenovo_sm6150`](https://github
 
 `boot.img` keeps the stock OS version and patch level (11.0.0, 2021-12): Keymaster only moves the patch level forward, so a later date would make a return to the stock boot image lose the keys bound to it.
 
+A return to the stock boot image also needs the stock `system`, `system_ext` and `product`: the PerleOS system images do not boot on the stock kernel (see the `pearl-common` README).
+
 Never use files from another model or another firmware release.
